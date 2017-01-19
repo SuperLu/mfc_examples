@@ -84,6 +84,8 @@ afx_msg LRESULT CTrayDemoDlg::OnShowTask(WPARAM wParam,LPARAM lParam)
 		menu.CreatePopupMenu();//声明一个弹出式菜单
 								//增加菜单项“关闭”，点击则发送消息WM_DESTROY给主窗口将程序结束。
 		menu.AppendMenu(MF_STRING, WM_DESTROY, _T("关闭")); //确定弹出式菜单的位置
+		menu.AppendMenu(MF_STRING, WM_TRAY_MENU_SHOW, _T("显示"));
+		SetForegroundWindow();//鼠标点击其他地方时，菜单消失
 		menu.TrackPopupMenu(TPM_LEFTALIGN, lpoint->x, lpoint->y, this); //资源回收
 		HMENU hmenu = menu.Detach();
 		menu.DestroyMenu();
@@ -97,6 +99,15 @@ afx_msg LRESULT CTrayDemoDlg::OnShowTask(WPARAM wParam,LPARAM lParam)
 	default: break;
 	}
 	return 0;
+}
+
+BOOL CTrayDemoDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->wParam == WM_TRAY_MENU_SHOW)
+	{
+		AfxMessageBox(_T("TEST"));
+	}
+	return CDialog::PreTranslateMessage(pMsg);
 }
 
 // 如果向对话框添加最小化按钮，则需要下面的代码
@@ -143,7 +154,7 @@ void CTrayDemoDlg::DialogToTray()
 	nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	nid.uCallbackMessage = WM_SHOWTASK;//自定义的消息名称
 	nid.hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME));
-	strcpy((char *)nid.szTip, "程序名称"); //信息提示条
+	StrCpyW(nid.szTip, _T("托盘")); //信息提示条
 	Shell_NotifyIcon(NIM_ADD, &nid); //在托盘区添加图标
 	ShowWindow(SW_HIDE); //隐藏主窗口
 }
@@ -157,7 +168,7 @@ void CTrayDemoDlg::DeleteTray()
 	nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	nid.uCallbackMessage = WM_SHOWTASK;//自定义的消息名称
 	nid.hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME));
-	strcpy((char *)nid.szTip, "程序名称"); //信息提示条为“计划任务提醒”
+	StrCpyW(nid.szTip, _T("hell")); //信息提示条为“计划任务提醒”
 	Shell_NotifyIcon(NIM_DELETE, &nid); //在托盘区删除图标
 }
 

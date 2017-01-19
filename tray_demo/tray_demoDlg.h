@@ -4,7 +4,7 @@
 
 #pragma once
 #define WM_SHOWTASK (WM_USER +1)
-
+#define WM_TRAY_MENU_SHOW (WM_USER+2)
 // CTrayDemoDlg ¶Ô»°¿ò
 class CTrayDemoDlg : public CDialogEx
 {
@@ -29,6 +29,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	virtual void OnSize(UINT nType, int cx, int cy);
 	afx_msg LRESULT OnShowTask(WPARAM wParam,LPARAM lParam);
+	afx_msg BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
