@@ -1,0 +1,4 @@
+﻿  HidDemoDlg.cpp
+e:\mfc\mfc_examples\hiddemo\hiddemodlg.cpp(99): warning C4018: “<”: 有符号/无符号不匹配
+  HidDemo.vcxproj -> E:\MFC\mfc_examples\Debug\HidDemo.exe
+  HidDemo.vcxproj -> E:\MFC\mfc_examples\Debug\HidDemo.pdb (Partial PDB)
